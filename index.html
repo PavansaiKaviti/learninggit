@@ -193,82 +193,6 @@
         margin-bottom: 1rem;
       }
 
-      /* Notification Modal Styles */
-      .notification-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-      }
-
-      .notification-overlay.show {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .notification-modal {
-        background: white;
-        padding: 3rem;
-        border-radius: 20px;
-        text-align: center;
-        max-width: 500px;
-        width: 90%;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        transform: scale(0.8);
-        transition: transform 0.3s ease;
-      }
-
-      .notification-overlay.show .notification-modal {
-        transform: scale(1);
-      }
-
-      .notification-icon {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-      }
-
-      .notification-title {
-        color: #2c5530;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        font-weight: bold;
-      }
-
-      .notification-message {
-        color: #666;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        line-height: 1.6;
-      }
-
-      .notification-button {
-        background: #4a7c59;
-        color: white;
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      .notification-button:hover {
-        background: #3a6b49;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-      }
-
       @media (max-width: 768px) {
         .nav-links {
           display: none;
@@ -293,39 +217,10 @@
         .page-section {
           padding: 2rem 1rem;
         }
-
-        .notification-modal {
-          padding: 2rem;
-          margin: 1rem;
-        }
-
-        .notification-title {
-          font-size: 1.5rem;
-        }
-
-        .notification-icon {
-          font-size: 3rem;
-        }
       }
     </style>
   </head>
   <body>
-    <!-- Welcome Notification Modal -->
-    <div id="notificationOverlay" class="notification-overlay">
-      <div class="notification-modal">
-        <div class="notification-icon">🌿</div>
-        <h2 class="notification-title">Welcome to Nature Explorer!</h2>
-        <p class="notification-message">
-          Discover the breathtaking beauty of our planet through forests,
-          oceans, mountains, and wildlife. Let's embark on a journey to explore
-          the wonders of nature together.
-        </p>
-        <button class="notification-button" onclick="closeNotification()">
-          Start Exploring
-        </button>
-      </div>
-    </div>
-
     <nav class="navbar">
       <div class="nav-container">
         <a href="#" class="logo">🌿 Nature Explorer</a>
@@ -508,33 +403,6 @@
     </main>
 
     <script>
-      // Show welcome notification when page loads
-      window.addEventListener("load", function () {
-        setTimeout(function () {
-          document.getElementById("notificationOverlay").classList.add("show");
-        }, 500); // Small delay for better user experience
-      });
-
-      // Close notification function
-      function closeNotification() {
-        const overlay = document.getElementById("notificationOverlay");
-        overlay.classList.remove("show");
-
-        // Optional: Remove from DOM after animation completes
-        setTimeout(function () {
-          overlay.style.display = "none";
-        }, 300);
-      }
-
-      // Close notification when clicking outside the modal
-      document
-        .getElementById("notificationOverlay")
-        .addEventListener("click", function (e) {
-          if (e.target === this) {
-            closeNotification();
-          }
-        });
-
       function showPage(pageId) {
         // Hide all pages
         const pages = document.querySelectorAll(".page-section");
