@@ -193,6 +193,141 @@
         margin-bottom: 1rem;
       }
 
+      /* Enhanced Notification Styles */
+      .notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, #4a7c59 0%, #2c5530 100%);
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+          0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        max-width: 380px;
+        transform: translateX(450px) scale(0.8);
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border-left: 6px solid #4a7c59;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .notification.show {
+        transform: translateX(0) scale(1);
+      }
+
+      .notification-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+      }
+
+      .notification-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .notification-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+        cursor: pointer;
+        padding: 0;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .notification-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg) scale(1.1);
+      }
+
+      .notification-message {
+        font-size: 1rem;
+        line-height: 1.5;
+        opacity: 0.95;
+        margin-bottom: 0.5rem;
+      }
+
+      .notification-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .notification-time {
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+
+      .notification-action {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .notification-action:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Notification Animation Keyframes */
+      @keyframes slideInRight {
+        0% {
+          transform: translateX(450px) scale(0.8);
+          opacity: 0;
+        }
+        50% {
+          transform: translateX(-20px) scale(1.05);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOutRight {
+        0% {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(450px) scale(0.8);
+          opacity: 0;
+        }
+      }
+
+      .notification.slide-in {
+        animation: slideInRight 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      .notification.slide-out {
+        animation: slideOutRight 0.4s ease-in-out;
+      }
+
       @media (max-width: 768px) {
         .nav-links {
           display: none;
@@ -217,6 +352,51 @@
         .page-section {
           padding: 2rem 1rem;
         }
+
+        .notification {
+          right: 10px;
+          left: 10px;
+          max-width: none;
+          transform: translateY(-100px) scale(0.8);
+        }
+
+        .notification.show {
+          transform: translateY(0) scale(1);
+        }
+
+        .notification.slide-in {
+          animation: slideInTop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .notification.slide-out {
+          animation: slideOutTop 0.4s ease-in-out;
+        }
+
+        @keyframes slideInTop {
+          0% {
+            transform: translateY(-100px) scale(0.8);
+            opacity: 0;
+          }
+          50% {
+            transform: translateY(20px) scale(1.05);
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideOutTop {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100px) scale(0.8);
+            opacity: 0;
+          }
+        }
       }
     </style>
   </head>
@@ -238,6 +418,31 @@
         </div>
       </div>
     </nav>
+
+    <!-- Enhanced Welcome Notification -->
+    <div id="welcomeNotification" class="notification">
+      <div class="notification-header">
+        <div class="notification-title">🌿 Welcome to Nature Explorer!</div>
+        <button
+          class="notification-close"
+          onclick="closeNotification()"
+          title="Close notification"
+        >
+          ×
+        </button>
+      </div>
+      <div class="notification-message">
+        Discover the breathtaking beauty of our planet through forests, oceans,
+        mountains, and wildlife. Start your journey of exploration and learn
+        about the wonders of nature!
+      </div>
+      <div class="notification-footer">
+        <div class="notification-time" id="currentTime"></div>
+        <button class="notification-action" onclick="startExploring()">
+          Start Exploring
+        </button>
+      </div>
+    </div>
 
     <main class="main-content">
       <section id="home" class="page-section active">
@@ -424,6 +629,62 @@
           navLinks.style.display =
             navLinks.style.display === "flex" ? "none" : "flex";
         });
+
+      // Enhanced Notification functionality
+      function showNotification() {
+        const notification = document.getElementById("welcomeNotification");
+        const timeElement = document.getElementById("currentTime");
+
+        // Set current time
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        timeElement.textContent = `Just now • ${timeString}`;
+
+        // Show notification with enhanced animation
+        setTimeout(() => {
+          notification.classList.add("show", "slide-in");
+        }, 1500); // Show after 1.5 seconds for better UX
+
+        // Auto-hide after 8 seconds if not closed
+        setTimeout(() => {
+          if (notification.classList.contains("show")) {
+            closeNotification();
+          }
+        }, 8000);
+      }
+
+      function closeNotification() {
+        const notification = document.getElementById("welcomeNotification");
+        notification.classList.remove("show", "slide-in");
+        notification.classList.add("slide-out");
+
+        setTimeout(() => {
+          notification.style.display = "none";
+          notification.classList.remove("slide-out");
+        }, 400); // Match animation duration
+      }
+
+      function startExploring() {
+        closeNotification();
+        showPage("forests");
+      }
+
+      // Show notification when page loads
+      window.addEventListener("load", showNotification);
+
+      // Add click outside to close notification
+      document.addEventListener("click", function (event) {
+        const notification = document.getElementById("welcomeNotification");
+        const isClickInside = notification.contains(event.target);
+
+        if (!isClickInside && notification.classList.contains("show")) {
+          // Don't close on outside click for better UX
+          // closeNotification();
+        }
+      });
     </script>
   </body>
 </html>
