@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nature Explorer - Discover the Beauty of Nature</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #2c5530;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #2c5530;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: #4a7c59;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #4a7c59;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .mobile-menu span {
+        width: 25px;
+        height: 3px;
+        background: #2c5530;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      .main-content {
+        margin-top: 80px;
+        padding: 2rem;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 4rem 0;
+        color: white;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-button {
+        display: inline-block;
+        background: #4a7c59;
+        color: white;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-button:hover {
+        background: #3a6b49;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .page-section {
+        display: none;
+        background: white;
+        margin: 2rem 0;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .page-section.active {
+        display: block;
+      }
+
+      .page-section h2 {
+        color: #2c5530;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+      }
+
+      .page-section p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+
+      .nature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .nature-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .nature-card h3 {
+        color: #2c5530;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .nature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu {
+          display: flex;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .nav-container {
+          padding: 0 1rem;
+        }
+
+        .main-content {
+          padding: 1rem;
+        }
+
+        .page-section {
+          padding: 2rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">🌿 Nature Explorer</a>
+        <ul class="nav-links">
+          <li><a href="#" onclick="showPage('home')">Home</a></li>
+          <li><a href="#" onclick="showPage('forests')">Forests</a></li>
+          <li><a href="#" onclick="showPage('oceans')">Oceans</a></li>
+          <li><a href="#" onclick="showPage('mountains')">Mountains</a></li>
+          <li><a href="#" onclick="showPage('wildlife')">Wildlife</a></li>
+        </ul>
+        <div class="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <section id="home" class="page-section active">
+        <div class="hero">
+          <h1>Welcome to Nature Explorer</h1>
+          <p>
+            Discover the breathtaking beauty of our planet through forests,
+            oceans, mountains, and wildlife. Let's embark on a journey to
+            explore the wonders of nature together.
+          </p>
+          <a href="#" class="cta-button" onclick="showPage('forests')"
+            >Start Exploring</a
+          >
+        </div>
+      </section>
+
+      <section id="forests" class="page-section">
+        <h2>🌲 Majestic Forests</h2>
+        <p>
+          Forests are the lungs of our planet, covering about 31% of the Earth's
+          land area. These incredible ecosystems are home to countless species
+          and play a vital role in maintaining the balance of our environment.
+        </p>
+
+        <div class="nature-grid">
+          <div class="nature-card">
+            <div class="nature-icon">🌳</div>
+            <h3>Tropical Rainforests</h3>
+            <p>
+              Home to more than half of the world's plant and animal species,
+              tropical rainforests are biodiversity hotspots that require our
+              protection.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🍂</div>
+            <h3>Deciduous Forests</h3>
+            <p>
+              These forests change with the seasons, showcasing nature's
+              incredible ability to adapt and transform throughout the year.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🌲</div>
+            <h3>Coniferous Forests</h3>
+            <p>
+              Also known as taiga, these forests are characterized by evergreen
+              trees and are found in colder climates around the world.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="oceans" class="page-section">
+        <h2>🌊 Vast Oceans</h2>
+        <p>
+          Covering more than 70% of our planet, oceans are the lifeblood of
+          Earth. They regulate climate, provide food, and are home to an
+          incredible diversity of marine life.
+        </p>
+
+        <div class="nature-grid">
+          <div class="nature-card">
+            <div class="nature-icon">🐠</div>
+            <h3>Coral Reefs</h3>
+            <p>
+              Often called the "rainforests of the sea," coral reefs support 25%
+              of all marine species despite covering less than 1% of the ocean
+              floor.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🐋</div>
+            <h3>Deep Ocean</h3>
+            <p>
+              The deep ocean remains one of the least explored areas on Earth,
+              home to mysterious creatures adapted to extreme conditions.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🌊</div>
+            <h3>Ocean Currents</h3>
+            <p>
+              These massive flows of water distribute heat around the globe and
+              play a crucial role in regulating Earth's climate.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mountains" class="page-section">
+        <h2>⛰️ Towering Mountains</h2>
+        <p>
+          Mountains are among the most dramatic and awe-inspiring features of
+          our planet. They shape weather patterns, provide fresh water, and
+          offer unique habitats for specialized species.
+        </p>
+
+        <div class="nature-grid">
+          <div class="nature-card">
+            <div class="nature-icon">🏔️</div>
+            <h3>Alpine Ecosystems</h3>
+            <p>
+              High-altitude environments where only the hardiest plants and
+              animals can survive in extreme conditions.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">❄️</div>
+            <h3>Glaciers</h3>
+            <p>
+              These massive ice formations store fresh water and provide crucial
+              insights into Earth's climate history.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🌄</div>
+            <h3>Mountain Peaks</h3>
+            <p>
+              Reaching for the sky, mountain peaks offer some of the most
+              spectacular views and challenging adventures on Earth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="wildlife" class="page-section">
+        <h2>🦋 Amazing Wildlife</h2>
+        <p>
+          From the smallest insects to the largest mammals, wildlife represents
+          the incredible diversity of life on Earth. Each species plays a unique
+          role in maintaining the delicate balance of ecosystems.
+        </p>
+
+        <div class="nature-grid">
+          <div class="nature-card">
+            <div class="nature-icon">🦅</div>
+            <h3>Birds of Prey</h3>
+            <p>
+              Majestic hunters that soar through the skies, playing crucial
+              roles as apex predators in their ecosystems.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🐘</div>
+            <h3>Large Mammals</h3>
+            <p>
+              From elephants to whales, these magnificent creatures are often
+              keystone species that shape their entire ecosystems.
+            </p>
+          </div>
+          <div class="nature-card">
+            <div class="nature-icon">🦋</div>
+            <h3>Pollinators</h3>
+            <p>
+              Essential for plant reproduction, pollinators like bees and
+              butterflies are crucial for maintaining biodiversity and food
+              production.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page-section");
+        pages.forEach((page) => page.classList.remove("active"));
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+
+      // Mobile menu toggle (basic implementation)
+      document
+        .querySelector(".mobile-menu")
+        .addEventListener("click", function () {
+          const navLinks = document.querySelector(".nav-links");
+          navLinks.style.display =
+            navLinks.style.display === "flex" ? "none" : "flex";
+        });
+    </script>
+  </body>
+</html>
